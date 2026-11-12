@@ -1,0 +1,27 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "audiobook-reader",
+	"main": "src/worker.js",
+	"compatibility_date": "2025-06-01",
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS",
+		"run_worker_first": [
+			"/api/*"
+		]
+	},
+	"r2_buckets": [
+		{
+			"binding": "FILES",
+			"bucket_name": "audiobook-files"
+		}
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "audiobook-db",
+			"database_id": "PASTE-YOUR-DATABASE-ID-HERE",
+			"migrations_dir": "migrations"
+		}
+	]
+}

@@ -1,0 +1,11 @@
+*.iml
+.gradle/
+build/
+local.properties
+.idea/
+*.apk
+*.aab
+.DS_Store
+.dev.vars
+node_modules/
+.wrangler/

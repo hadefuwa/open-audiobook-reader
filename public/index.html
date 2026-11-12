@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#14181f">
+<title>Audiobook Reader</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main id="app">
+
+  <section id="login" hidden>
+    <h1>Audiobook Reader</h1>
+    <form id="loginForm">
+      <input id="password" type="password" placeholder="Password" autocomplete="current-password" required>
+      <button type="submit">Sign in</button>
+      <p class="error" id="loginError"></p>
+    </form>
+  </section>
+
+  <section id="library" hidden>
+    <header>
+      <h1>Library</h1>
+      <div class="row">
+        <label class="btn" for="fileInput">Upload</label>
+        <input id="fileInput" type="file" accept=".pdf,.docx,.txt" multiple hidden>
+        <button id="logout" class="ghost">Sign out</button>
+      </div>
+    </header>
+    <p id="status" class="muted"></p>
+    <ul id="bookList"></ul>
+    <p id="empty" class="muted" hidden>No books yet. Upload a PDF, Word (.docx) or text file.</p>
+  </section>
+
+  <section id="reader" hidden>
+    <header>
+      <button id="back" class="ghost">&larr; Library</button>
+      <h2 id="bookTitle"></h2>
+    </header>
+    <p id="readerStatus" class="muted"></p>
+    <div id="rangeRow" class="row" hidden>
+      <label>Read pages <input id="pageFrom" type="number" min="1" inputmode="numeric"></label>
+      <label>to <input id="pageTo" type="number" min="1" inputmode="numeric"></label>
+      <span id="pageOf" class="muted"></span>
+    </div>
+    <div id="text" tabindex="0"></div>
+    <div id="controls">
+      <input id="seek" type="range" min="0" max="0" value="0" aria-label="Position">
+      <div class="row">
+        <button id="prev" aria-label="Previous sentence">&#9198;</button>
+        <button id="play" aria-label="Play">&#9654;</button>
+        <button id="next" aria-label="Next sentence">&#9197;</button>
+        <label>Speed
+          <select id="rate">
+            <option value="0.75">0.75x</option><option value="1" selected>1x</option>
+            <option value="1.25">1.25x</option><option value="1.5">1.5x</option>
+            <option value="1.75">1.75x</option><option value="2">2x</option><option value="2.5">2.5x</option>
+          </select>
+        </label>
+        <label>Voice <select id="voice"></select></label>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
