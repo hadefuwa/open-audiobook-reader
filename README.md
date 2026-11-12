@@ -48,7 +48,7 @@ The cloud version uses Cloudflare Workers (site and API), R2 (file storage) and 
 ### Steps
 
 ```bash
-git clone https://github.com/<owner>/open-audiobook-reader.git
+git clone https://github.com/hadefuwa/open-audiobook-reader.git
 cd open-audiobook-reader
 npm install
 
