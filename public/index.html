@@ -2,69 +2,218 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#14181f">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f6fa" id="themeColor">
+<meta name="color-scheme" content="light dark">
 <title>Audiobook Reader</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<main id="app">
 
-  <section id="login" hidden>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4.5" height="16" rx="1.2" fill="currentColor" stroke="none"/><rect x="13.5" y="4" width="4.5" height="16" rx="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+    <symbol id="i-pgprev" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></symbol>
+    <symbol id="i-pgnext" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol>
+  </defs>
+</svg>
+
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<!-- ============ Login ============ -->
+<section id="login" class="view" hidden>
+  <form id="loginForm" class="login-card">
+    <img src="/favicon.svg" alt="" width="64" height="64">
     <h1>Audiobook Reader</h1>
-    <form id="loginForm">
-      <input id="password" type="password" placeholder="Password" autocomplete="current-password" required>
-      <button type="submit">Sign in</button>
-      <p class="error" id="loginError"></p>
-    </form>
-  </section>
+    <p class="muted">Your own books, read aloud.</p>
+    <input id="password" type="password" placeholder="Password" autocomplete="current-password" required>
+    <button type="submit" class="btn primary block">Sign in</button>
+    <p class="error" id="loginError" role="alert"></p>
+  </form>
+</section>
 
-  <section id="library" hidden>
-    <header>
-      <h1>Library</h1>
-      <div class="row">
-        <label class="btn" for="fileInput">Upload</label>
-        <input id="fileInput" type="file" accept=".pdf,.docx,.txt" multiple hidden>
-        <button id="logout" class="ghost">Sign out</button>
-      </div>
-    </header>
-    <p id="status" class="muted"></p>
-    <ul id="bookList"></ul>
-    <p id="empty" class="muted" hidden>No books yet. Upload a PDF, Word (.docx) or text file.</p>
-  </section>
+<!-- ============ Library ============ -->
+<section id="library" class="view" hidden>
+  <header class="topbar">
+    <div class="brand"><img src="/favicon.svg" alt="" width="30" height="30"><h1>Library</h1></div>
+    <div class="actions">
+      <label class="btn primary" for="fileInput"><svg class="ic"><use href="#i-upload"/></svg><span class="hide-sm">Upload</span></label>
+      <input id="fileInput" type="file" accept=".pdf,.docx,.txt" multiple hidden>
+      <button id="appMenu" class="icon-btn" aria-label="Settings"><svg class="ic"><use href="#i-sliders"/></svg></button>
+    </div>
+  </header>
 
-  <section id="reader" hidden>
-    <header>
-      <button id="back" class="ghost">&larr; Library</button>
+  <main class="wrap">
+    <div id="continue" class="continue" hidden></div>
+
+    <div class="toolbar">
+      <label class="search"><svg class="ic"><use href="#i-search"/></svg>
+        <input id="search" type="search" placeholder="Search books" autocomplete="off"></label>
+      <select id="sort" aria-label="Sort books">
+        <option value="recent">Recent</option>
+        <option value="title">Title A–Z</option>
+        <option value="progress">Progress</option>
+        <option value="added">Newest added</option>
+      </select>
+    </div>
+
+    <div id="progressBox" class="upload-progress" hidden>
+      <div class="upload-text" id="status"></div>
+      <div class="bar"><i id="uploadFill"></i></div>
+    </div>
+
+    <ul id="bookList" class="grid"></ul>
+
+    <div id="empty" class="empty" hidden>
+      <svg class="ic big"><use href="#i-book"/></svg>
+      <h2>No books yet</h2>
+      <p class="muted">Upload a PDF, Word (.docx) or text file, or drop it anywhere on this page.</p>
+      <label class="btn primary" for="fileInput"><svg class="ic"><use href="#i-upload"/></svg>Upload a book</label>
+    </div>
+    <p id="noMatch" class="muted center" hidden>No books match your search.</p>
+  </main>
+  <div id="dropHint" class="drop-hint" hidden><div>Drop files to upload</div></div>
+</section>
+
+<!-- ============ Reader ============ -->
+<section id="reader" class="view" hidden>
+  <header class="topbar">
+    <button id="back" class="icon-btn" aria-label="Back to library"><svg class="ic"><use href="#i-back"/></svg></button>
+    <div class="titlebox">
       <h2 id="bookTitle"></h2>
-    </header>
-    <p id="readerStatus" class="muted"></p>
-    <div id="rangeRow" class="row" hidden>
-      <label>Read pages <input id="pageFrom" type="number" min="1" inputmode="numeric"></label>
-      <label>to <input id="pageTo" type="number" min="1" inputmode="numeric"></label>
-      <span id="pageOf" class="muted"></span>
+      <div id="bookSub" class="muted small"></div>
     </div>
-    <div id="text" tabindex="0"></div>
-    <div id="controls">
+    <div class="actions">
+      <button id="btnContents" class="icon-btn" aria-label="Contents" hidden><svg class="ic"><use href="#i-list"/></svg></button>
+      <button id="btnMarks" class="icon-btn" aria-label="Bookmarks"><svg class="ic"><use href="#i-bookmark"/></svg></button>
+      <button id="btnSettings" class="icon-btn" aria-label="Reader settings"><svg class="ic"><use href="#i-sliders"/></svg></button>
+    </div>
+  </header>
+
+  <div id="readerStatus" class="status-line" hidden></div>
+  <div id="text" class="reading" tabindex="0" aria-label="Book text"></div>
+
+  <footer id="dock" class="dock">
+    <div class="seekrow">
+      <span id="tCur" class="small muted tnum">0%</span>
       <input id="seek" type="range" min="0" max="0" value="0" aria-label="Position">
-      <div class="row">
-        <button id="prev" aria-label="Previous sentence">&#9198;</button>
-        <button id="play" aria-label="Play">&#9654;</button>
-        <button id="next" aria-label="Next sentence">&#9197;</button>
-        <label>Speed
-          <select id="rate">
-            <option value="0.75">0.75x</option><option value="1" selected>1x</option>
-            <option value="1.25">1.25x</option><option value="1.5">1.5x</option>
-            <option value="1.75">1.75x</option><option value="2">2x</option><option value="2.5">2.5x</option>
-          </select>
-        </label>
-        <label>Voice <select id="voice"></select></label>
+      <span id="tLeft" class="small muted tnum"></span>
+    </div>
+    <div class="transport">
+      <button id="btnRate" class="chip" aria-label="Playback speed">1×</button>
+      <button id="pgPrev" class="icon-btn" aria-label="Previous page"><svg class="ic"><use href="#i-pgprev"/></svg></button>
+      <button id="prev" class="icon-btn" aria-label="Previous sentence"><svg class="ic"><use href="#i-prev"/></svg></button>
+      <button id="play" class="play-btn" aria-label="Play"><svg class="ic"><use href="#i-play"/></svg></button>
+      <button id="next" class="icon-btn" aria-label="Next sentence"><svg class="ic"><use href="#i-next"/></svg></button>
+      <button id="pgNext" class="icon-btn" aria-label="Next page"><svg class="ic"><use href="#i-pgnext"/></svg></button>
+      <button id="btnSleep" class="chip" aria-label="Sleep timer"><svg class="ic sm"><use href="#i-moon"/></svg><span id="sleepLabel">Sleep</span></button>
+    </div>
+  </footer>
+</section>
+
+<!-- ============ Sheets (bottom sheet on phones, side drawer on desktop) ============ -->
+<div id="sheet" class="sheet" hidden>
+  <div class="scrim" id="scrim"></div>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="grab"></div>
+    <header class="sheet-head"><h3 id="sheetTitle"></h3><button id="sheetClose" class="icon-btn" aria-label="Close"><svg class="ic"><use href="#i-close"/></svg></button></header>
+    <div class="sheet-body">
+
+      <!-- Reader settings -->
+      <div data-sheet="settings" hidden>
+        <div class="group" id="rangeGroup">
+          <div class="label">Pages to read</div>
+          <div class="range-row">
+            <label>From <input id="pageFrom" type="number" min="1" inputmode="numeric"></label>
+            <label>To <input id="pageTo" type="number" min="1" inputmode="numeric"></label>
+            <span id="pageOf" class="muted small"></span>
+          </div>
+          <label class="field">Skip pages <span class="muted small">(e.g. 56, 60-62)</span>
+            <input id="skipPages" type="text" inputmode="numeric" placeholder="None" autocomplete="off">
+          </label>
+        </div>
+        <div class="group">
+          <div class="label">Voice</div>
+          <select id="voice" class="block" aria-label="Voice"></select>
+          <div class="label mt">Speed <span id="rateVal" class="muted tnum"></span></div>
+          <input id="rate" type="range" min="0.5" max="3" step="0.05" value="1" aria-label="Speed">
+        </div>
+        <div class="group app-settings">
+          <div class="label">Text size <span id="sizeVal" class="muted tnum"></span></div>
+          <input id="fontSize" type="range" min="14" max="30" step="1" value="18" aria-label="Text size">
+          <div class="label mt">Font</div>
+          <div class="seg" id="fontSeg">
+            <button data-v="sans">Sans</button><button data-v="serif">Serif</button><button data-v="mono">Mono</button>
+          </div>
+        </div>
+        <div class="group app-settings">
+          <div class="label">Theme</div>
+          <div class="seg" id="themeSeg">
+            <button data-v="auto">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button><button data-v="sepia">Sepia</button>
+          </div>
+          <label class="switch mt"><input type="checkbox" id="follow"><span>Keep the current sentence in view</span></label>
+          <label class="switch"><input type="checkbox" id="dimSkipped"><span>Hide skipped pages</span></label>
+        </div>
+        <p class="muted small">Shortcuts: Space play/pause, ← → sentence, [ ] page, B bookmark.</p>
+      </div>
+
+      <!-- Contents -->
+      <div data-sheet="contents" hidden><ul id="contentsList" class="rows"></ul></div>
+
+      <!-- Bookmarks -->
+      <div data-sheet="marks" hidden>
+        <button id="addMark" class="btn primary block"><svg class="ic"><use href="#i-bookmark"/></svg>Bookmark current sentence</button>
+        <ul id="marksList" class="rows"></ul>
+        <p id="noMarks" class="muted center" hidden>No bookmarks yet.</p>
+      </div>
+
+      <!-- Sleep timer -->
+      <div data-sheet="sleep" hidden>
+        <ul class="rows" id="sleepList"></ul>
+      </div>
+
+      <!-- Speed (quick) -->
+      <div data-sheet="speed" hidden>
+        <div class="chips" id="speedChips"></div>
+      </div>
+
+      <!-- Book menu -->
+      <div data-sheet="bookmenu" hidden>
+        <button id="bmRename" class="row-btn"><svg class="ic"><use href="#i-edit"/></svg>Rename</button>
+        <button id="bmDelete" class="row-btn danger"><svg class="ic"><use href="#i-trash"/></svg>Delete</button>
+      </div>
+
+      <!-- App menu (library) -->
+      <div data-sheet="app" hidden>
+        <div class="group">
+          <div class="label">Theme</div>
+          <div class="seg" id="themeSeg2">
+            <button data-v="auto">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button><button data-v="sepia">Sepia</button>
+          </div>
+        </div>
+        <button id="logout" class="row-btn"><svg class="ic"><use href="#i-logout"/></svg>Sign out</button>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-</main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script type="module" src="/app.js"></script>
 </body>

@@ -95,7 +95,7 @@ export default {
 
     if (path === "/api/books" && request.method === "GET") {
       const { results } = await env.DB.prepare(
-        "SELECT id, title, filename, content_type, size, position, total, page_start, page_end, created_at, updated_at FROM books ORDER BY updated_at DESC",
+        "SELECT id, title, filename, content_type, size, position, total, page_start, page_end, skip_pages, bookmarks, created_at, updated_at FROM books ORDER BY updated_at DESC",
       ).all();
       return json(results);
     }
@@ -115,7 +115,7 @@ export default {
       return json({ id, title }, 201);
     }
 
-    const m = path.match(/^\/api\/books\/([0-9a-f-]{36})(\/file|\/position|\/range)?$/);
+    const m = path.match(/^\/api\/books\/([0-9a-f-]{36})(\/file|\/position|\/range|\/meta)?$/);
     if (m) {
       const [, id, sub] = m;
       const book = await env.DB.prepare("SELECT * FROM books WHERE id = ?").bind(id).first();
@@ -146,6 +146,29 @@ export default {
         const page_end = Math.max(0, Math.floor(Number(b.page_end) || 0));
         await env.DB.prepare("UPDATE books SET page_start = ?, page_end = ? WHERE id = ?")
           .bind(page_start, page_end, id).run();
+        return json({ ok: true });
+      }
+
+      if (sub === "/meta" && request.method === "PUT") {
+        let b;
+        try { b = await request.json(); } catch { return json({ error: "Bad request" }, 400); }
+        const sets = [], vals = [];
+        if (typeof b.title === "string") {
+          const t = b.title.trim().slice(0, 200);
+          if (!t) return json({ error: "Title cannot be empty" }, 400);
+          sets.push("title = ?"); vals.push(t);
+        }
+        if (typeof b.skip_pages === "string") { sets.push("skip_pages = ?"); vals.push(b.skip_pages.replace(/[^0-9, -]/g, "").slice(0, 500)); }
+        if (Array.isArray(b.bookmarks)) {
+          const clean = b.bookmarks.slice(0, 200).map((x) => ({
+            i: Math.max(0, Math.floor(Number(x.i) || 0)),
+            note: String(x.note || "").slice(0, 120),
+            at: Math.floor(Number(x.at) || Date.now()),
+          }));
+          sets.push("bookmarks = ?"); vals.push(JSON.stringify(clean));
+        }
+        if (!sets.length) return json({ error: "Nothing to update" }, 400);
+        await env.DB.prepare(`UPDATE books SET ${sets.join(", ")} WHERE id = ?`).bind(...vals, id).run();
         return json({ ok: true });
       }
 

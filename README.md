@@ -13,14 +13,20 @@ Everything stays under your control. There is no tracking, no account with us, a
 
 ## Features
 
-- Upload PDF, DOCX and TXT files
-- Read only a page range (skip covers, contents, author notes)
+- Upload PDF, DOCX and TXT files (drag and drop, with progress)
+- Read only a page range, and skip individual pages such as `56, 60-62`
 - Skips repeated page headers, footers and page numbers in PDFs
 - Handles awkward PDFs that store one glyph at a time
+- Contents list from a PDF's built-in bookmarks
+- Bookmarks, saved reading position and skip settings sync across your devices (cloud version)
 - Highlights the sentence being read; click any sentence to jump there
-- Speed and voice selection, using your browser's built-in voices
-- Saves your place; lock-screen controls via Media Session; screen wake lock while playing
-- Light and dark theme
+- Speed (0.5x to 3x), voice choice, sleep timer, time-left estimate
+- Mobile-first layout with Auto, Light, Dark and Sepia themes, adjustable text size and font
+- Library search, sort, rename, and a "Continue listening" shortcut
+- Lock-screen controls via Media Session; screen wake lock while playing
+- Keyboard shortcuts: Space, left/right arrows, [ and ], B
+
+> The offline copy in `local/` has the core reader (storage in your browser, page range, voices) but not yet the newer interface and extras.
 
 ## Option 1: Offline on your own computer
 
